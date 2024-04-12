@@ -1,8 +1,9 @@
+import {hash} from "bcryptjs";
 import {Company} from "src/company/entities/company.entity";
 import {Role} from "src/roles/entities/role.entity";
-import {Column, DeleteDateColumn, Entity, JoinTable, ManyToMany, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn} from "typeorm";
+import {BeforeInsert, BeforeUpdate, Column, DeleteDateColumn, Entity, JoinTable, ManyToMany, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn} from "typeorm";
 
-@Entity({name:'users'})
+@Entity()
 export class User {
 	//@PrimaryGeneratedColumn()
 	@Column({primary: true, generated: true})
@@ -26,8 +27,7 @@ export class User {
 	@Column()
 	logo:string;
 
-	@DeleteDateColumn()
-	deletedAt:Date;
+	@DeleteDateColumn() 
 
 	@ManyToMany(()=>Company, company=>company.users,{
 		eager:true,
@@ -38,4 +38,11 @@ export class User {
 	}) 
 	@JoinTable()
 	roles: Role[];
+
+	@BeforeInsert()
+	@BeforeUpdate()
+	async hashPassword(){
+		if(!this.password) return;
+		this.password = await hash(this.password, 10)
+	}
 }

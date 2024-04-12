@@ -2,7 +2,7 @@ import {Column, Entity, ManyToMany} from "typeorm";
 import {RoleName} from "../rol.enum";
 import {User} from "src/users/entities/user.entity";
 
-@Entity({name:'roles'})
+@Entity()
 export class Role {
 	@Column({primary: true, generated: true})
 	id: number;

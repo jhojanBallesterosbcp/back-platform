@@ -5,6 +5,7 @@ import {InjectRepository} from '@nestjs/typeorm';
 import {Role} from './entities/role.entity';
 import {Repository} from 'typeorm';
 import {RoleName} from './rol.enum';
+import {MessageDto} from 'src/common/message.dto';
 
 @Injectable()
 export class RolesService {
@@ -16,14 +17,14 @@ export class RolesService {
   async create(createRoleDto: CreateRoleDto):Promise<any> {
 		const roleName: RoleName = createRoleDto.roleName as RoleName;
 		const exist = await this.roleRepository.findOne({where:{roleName}}); 
-		if(exist) throw new BadRequestException(new Error('Already exist'));
+		if(exist) throw new BadRequestException(new MessageDto('Already exist'));
 		await this.roleRepository.save(createRoleDto as Role)
     return 'rol creado ';
   }
 
  async findAll():Promise<Role[]> { 
 	const roles = await this.roleRepository.find();
-	if(!roles.length)throw new NotFoundException(new Error('No Roles'));
+	if(!roles.length)throw new NotFoundException(new MessageDto('No Roles'));
 	return roles;
 	
 

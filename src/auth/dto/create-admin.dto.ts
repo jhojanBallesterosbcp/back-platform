@@ -1,6 +1,6 @@
 import {IsOptional, IsInt, IsPositive, IsString, MinLength} from "class-validator";
 
-export class CreateUserDto {
+export class CreateAdminDto {
 
 	@IsString()
 	@MinLength(1)
@@ -8,7 +8,7 @@ export class CreateUserDto {
 	
 	@IsString()
 	lastname: string;
-
+	
 	@IsString()
 	password: string;
 	
