@@ -44,12 +44,14 @@ export class AgentService {
 			name,
 		} 
 
+		console.log(name)
 		try {
 			const response=await this.answerClient.converseConversation(request);
-
+			
+			console.log(response)
 			for await (const res of response){
-
-			return res}
+				
+				return res}
 		} catch(error) {
 			console.log(error)
 			throw error;
