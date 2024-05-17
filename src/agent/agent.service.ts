@@ -5,10 +5,10 @@ import {ConversationalSearchServiceClient} from '@google-cloud/discoveryengine';
 
 @Injectable()
 export class AgentService {
-	private readonly projectId=process.env.PROJECTID;
-	private readonly location=process.env.LOCATION; // Options: 'global', 'us', 'eu'
-	private readonly collectionId=process.env.COLLECTIONID; // Options: 'default_collection'
-	private readonly dataStoreId=process.env.DATASTOREID; // Create in Cloud Console
+	private readonly projectId="277380748256";
+	private readonly location="global"; // Options: 'global', 'us', 'eu'
+	private readonly collectionId="default_collection"; // Options: 'default_collection'
+	private readonly dataStoreId="rosariotesting-datastore4-_1696270521884"; // Create in Cloud Console
 
 	private readonly conversations='-'
 	private readonly answerClient: ConversationalSearchServiceClient;
