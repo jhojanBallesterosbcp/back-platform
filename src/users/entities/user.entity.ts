@@ -2,7 +2,7 @@ import {hash} from "bcryptjs";
 import {Role} from "../../common/enums/rol.enum";
 import {Company} from "src/company/entities/company.entity";
 
-import {BeforeInsert,BeforeUpdate,Column,DeleteDateColumn,Entity,JoinColumn,JoinTable,ManyToMany,ManyToOne,} from "typeorm";
+import {BeforeInsert,BeforeUpdate,Column,DeleteDateColumn,Entity,ManyToOne,} from "typeorm";
 
 @Entity()
 export class User {

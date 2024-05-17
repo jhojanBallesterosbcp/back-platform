@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable, InternalServerErrorException, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
 import {UsersService} from 'src/users/users.service';
 import {LoginDto} from './dto/login.dto';
 import {RegisterDto} from './dto/register.dto';
@@ -64,7 +64,7 @@ export class AuthService {
     };
   }
 
-	async profile({ email, role }: { email: string; role: string }) {
+	async profile({ email }: { email: string; role: string }) {
     return await this.usersService.findOneByEmail(email);
   }
 

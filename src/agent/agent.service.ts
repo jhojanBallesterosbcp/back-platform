@@ -15,13 +15,13 @@ export class AgentService {
 
 	constructor() {
 		const apiEndpoint=
-			this.location==='global'
+			this.location==="global"
 				? 'discoveryengine.googleapis.com'
 				:`${this.location}-discoveryengine.googleapis.com`;
 
 		this.answerClient=new ConversationalSearchServiceClient({apiEndpoint: apiEndpoint})
 	}
-
+	
 	async converse(query: string) {
 		const name=this.answerClient.projectLocationCollectionDataStoreConversationPath(
 			this.projectId,
@@ -40,19 +40,21 @@ export class AgentService {
 				summaryResultCount: 5,
 				ignoreAdversarialQuery: true,
 				includeCitations: true,
-			},
+			}, 
 			name,
-		}
+		} 
 
 		try {
 			const response=await this.answerClient.converseConversation(request);
+
 			for await (const res of response){
 
 			return res}
 		} catch(error) {
+			console.log(error)
 			throw error;
 		}
-	}
+	}  
 
 }
 

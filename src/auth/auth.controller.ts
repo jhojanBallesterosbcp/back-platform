@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, UseGuards, Request } from '@nestjs/common';
+import { Body, Controller,  Get,   Post, UseGuards, Request } from '@nestjs/common';
 import {AuthService} from './auth.service';
 import {RegisterDto} from './dto/register.dto';
 import {LoginDto} from './dto/login.dto';
@@ -6,12 +6,7 @@ import {AuthGuard} from './guards/auth.guard';
 import {User} from 'src/users/entities/user.entity';
 import {JwtService} from '@nestjs/jwt';
 
-interface RequestWithUser extends Request {
-  user: {
-    email: string;
-    role: string;
-  };   
-} 
+
 
 @Controller('auth')
 export class AuthController {

@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller,  Post } from '@nestjs/common';
 import {AgentService} from './agent.service';
 
 @Controller('agent')
@@ -13,3 +13,4 @@ async converse(@Body() body: {query:string}){
 	return this.agentService.converse(body.query);
 }
 }
+   
