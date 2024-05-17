@@ -1,6 +1,6 @@
 import {Injectable} from '@nestjs/common';
 
-import {ConversationalSearchServiceClient} from '@google-cloud/discoveryengine';
+import {ConversationalSearchServiceClient} from '@google-cloud/discoveryengine/build/src/v1alpha';
 
 
 @Injectable()
