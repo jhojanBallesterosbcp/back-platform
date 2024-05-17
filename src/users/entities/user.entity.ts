@@ -1,48 +1,42 @@
 import {hash} from "bcryptjs";
+import {Role} from "../../common/enums/rol.enum";
 import {Company} from "src/company/entities/company.entity";
-import {Role} from "src/roles/entities/role.entity";
-import {BeforeInsert, BeforeUpdate, Column, DeleteDateColumn, Entity, JoinTable, ManyToMany, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn} from "typeorm";
+
+import {BeforeInsert,BeforeUpdate,Column,DeleteDateColumn,Entity,JoinColumn,JoinTable,ManyToMany,ManyToOne,} from "typeorm";
 
 @Entity()
 export class User {
 	//@PrimaryGeneratedColumn()
-	@Column({primary: true, generated: true})
+	@Column({primary: true,generated: true})
 	id: number;
-	
+
 	@Column({type: 'varchar'})
-	firstname: string;
-	
-	@Column()
-	lastname: string;
-	
+	name: string;
+
 	@Column()
 	password: string;
 	
 	@Column()
-	email:string;
+	photo: string;
 
 	@Column()
-	phone:number;
-
-	@Column()
-	logo:string;
+	email: string;
 
 	@DeleteDateColumn() 
+	deletedAt:Date;
 
-	@ManyToMany(()=>Company, company=>company.users,{
-		eager:true,
-	})
-	company: Company[];
-	@ManyToMany(() =>Role,roles=>roles.users,{
+	@ManyToOne(() => Company, (company) =>company.id,{
 		eager:true
-	}) 
-	@JoinTable()
-	roles: Role[];
+	})
+	company: Company;
+
+	@Column({type: 'enum',default: Role.ADMIN,enum: Role})
+	role: Role;
 
 	@BeforeInsert()
 	@BeforeUpdate()
-	async hashPassword(){
+	async hashPassword() { 
 		if(!this.password) return;
-		this.password = await hash(this.password, 10)
+		this.password=await hash(this.password,10)
 	}
-}
+} 

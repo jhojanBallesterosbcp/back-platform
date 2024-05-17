@@ -1,5 +1,5 @@
 import {User} from "src/users/entities/user.entity";
-import {Column, Entity, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn} from "typeorm";
+import {Column, DeleteDateColumn, Entity, JoinColumn, JoinTable, ManyToMany, OneToMany, PrimaryGeneratedColumn} from "typeorm";
 
 @Entity()
 export class Company {
@@ -7,13 +7,22 @@ export class Company {
 	@PrimaryGeneratedColumn()
 	id:number;
 
-	@Column()
+	@Column()    
 	name:string;
 	
-	@Column()
-	address: string;
+	@Column({ nullable: true })
+	address?: string;
+
+	@Column({ nullable: true })
+	colorTheme?: string;
 	
-	@ManyToMany(()=>User, user=>user.company)
-	@JoinTable()
-	users:User[];
-}
+	@Column({ nullable: true })
+	logo?: string;
+
+	@DeleteDateColumn()
+  deletedAt: Date;
+
+	@OneToMany(()=>User, (user) => user.company)
+	users:User[]
+
+}   

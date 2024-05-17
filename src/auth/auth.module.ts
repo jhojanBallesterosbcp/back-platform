@@ -1,13 +1,20 @@
 import { Module } from '@nestjs/common';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
-import {TypeOrmModule} from '@nestjs/typeorm';
-import {User} from 'src/users/entities/user.entity';
-import {Role} from 'src/roles/entities/role.entity';
-import {Company} from 'src/company/entities/company.entity';
+import {UsersModule} from 'src/users/users.module';
+import {JwtModule} from '@nestjs/jwt';
+import {ConfigModule} from '@nestjs/config';
 
-@Module({
-	imports:[TypeOrmModule.forFeature([User,Role, Company])],
+@Module({    
+	imports:[
+		ConfigModule.forRoot({envFilePath:['.env']}),
+		JwtModule.register({
+			global: true,
+      secret: process.env.JWT_SEED,
+      signOptions: { expiresIn: '1d' },
+    }),
+		UsersModule,
+	],
   controllers: [AuthController],
   providers: [AuthService]
 })
