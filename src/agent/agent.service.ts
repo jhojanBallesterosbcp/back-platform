@@ -43,7 +43,7 @@ export class AgentService {
 			}, 
 			name,
 		} 
-
+		console.log(this.answerClient)
 		console.log(name)
 		try {
 			const response=await this.answerClient.converseConversation(request);
