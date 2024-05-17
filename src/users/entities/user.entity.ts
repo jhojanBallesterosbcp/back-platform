@@ -16,10 +16,10 @@ export class User {
 	@Column()
 	password: string;
 	
-	@Column()
-	photo: string;
+	@Column({nullable:true})
+	photo?: string;   
 
-	@Column()
+	@Column() 
 	email: string;
 
 	@DeleteDateColumn() 
