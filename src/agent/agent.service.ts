@@ -1,5 +1,5 @@
 import {Injectable} from '@nestjs/common';
-
+import { GoogleAuth } from 'google-auth-library';
 import {ConversationalSearchServiceClient} from '@google-cloud/discoveryengine/build/src/v1alpha';
 
 
@@ -14,6 +14,11 @@ export class AgentService {
 	private readonly answerClient: ConversationalSearchServiceClient;
 
 	constructor() {
+		const auth = new GoogleAuth({ 
+			keyFile: 'auth.json',    
+			scopes: 'https://www.googleapis.com/auth/cloud-platform',
+		  });
+		  console.log(auth)
 		const apiEndpoint=
 			this.location==="global"
 				? 'discoveryengine.googleapis.com'
@@ -43,12 +48,10 @@ export class AgentService {
 			}, 
 			name,
 		} 
-		console.log(this.answerClient)
-		console.log(name)
+		
 		try {
 			const response=await this.answerClient.converseConversation(request);
-			
-			console.log(response)
+		
 			for await (const res of response){
 				
 				return res}
@@ -59,5 +62,53 @@ export class AgentService {
 	}  
 
 }
+
+/* import { Injectable } from '@nestjs/common';
+import { HttpService } from '@nestjs/axios';
+import { lastValueFrom } from 'rxjs';
+import { GoogleAuth } from 'google-auth-library';
+
+@Injectable() 
+export class AgentService {
+  constructor(private readonly httpService: HttpService) {}
+
+  async converse(query: string): Promise<any> {
+    const url = 'https://discoveryengine.googleapis.com/v1alpha/projects/119496560003/locations/global/collections/default_collection/dataStores/20240809hispanicstarssearchdataupdated_1723246737335/servingConfigs/default_search:search';
+    
+    const headers = {
+      Authorization: `Bearer ${await this.getAccessToken()}`,
+      'Content-Type': 'application/json',
+    };
+
+    const body = {
+      query,
+      pageSize: 10,
+      queryExpansionSpec: { condition: 'AUTO' },
+      spellCorrectionSpec: { mode: 'AUTO' },
+      sessionSpec: { searchResultPersistenceCount: 5 },
+      session: 'projects/119496560003/locations/global/collections/default_collection/engines/20240809hispanicstardatase_1723246572909/sessions/-',
+    };
+
+    const response = this.httpService.post(url, body, { headers });
+    return lastValueFrom(response);
+  }
+
+  private async getAccessToken(): Promise<string> {
+    const auth = new GoogleAuth({ 
+		keyFile: 'auth.json',    
+		scopes: 'https://www.googleapis.com/auth/cloud-platform',
+	  });
+  console.log("auth",auth)
+	  const client = await auth.getClient();
+	  const accessTokenResponse = await client.getAccessToken();
+	  console.log('Access Token:', accessTokenResponse.token);
+	  if (!accessTokenResponse.token) {
+		throw new Error('Unable to retrieve access token');
+	  }
+  
+	  return accessTokenResponse.token;
+	}
+  
+} */
 
 
